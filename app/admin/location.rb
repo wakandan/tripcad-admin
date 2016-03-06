@@ -21,6 +21,9 @@ permit_params :name, :description, :theme_ids, :latitude, :longitude, :image_url
   end
 
   index do
+    column 'id' do |location|
+      link_to location.id, admin_location_path(location)
+    end
     column :name
     column :latitude
     column :longitude
