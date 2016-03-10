@@ -27,16 +27,26 @@ permit_params :name, :description, :latitude, :longitude, :image_url,
       link_to location.id, admin_location_path(location)
     end
     column :name
-    column :latitude
-    column :longitude
+    # column :latitude
+    # column :longitude
     column :description
     # column :address
     column :title
     column :location_type
-    column :best_month_from
-    column :best_month_to
+    # column :best_month_from
+    # column :best_month_to
     column :themes do |location|
       location.themes.pluck(:name).try(:join, ', ')
+    end
+  end
+
+  show do
+    attributes_table do
+      row :name
+      row :description
+      row :themes do |location|
+        location.themes.pluck(:name).try(:join, ', ')
+      end
     end
   end
 
