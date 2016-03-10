@@ -3,7 +3,9 @@ ActiveAdmin.register Location do
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #
-permit_params :name, :description, :theme_ids, :latitude, :longitude, :image_url, :best_month_from, :best_month_to
+permit_params :name, :description, :latitude, :longitude, :image_url,
+  :best_month_from, :best_month_to, :address, :phone, :activity_theme_cd, :directions,
+  :url, :hours, :email, :title, :location_type, theme_ids: []
 #
 # or
 #
