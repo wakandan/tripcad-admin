@@ -30,11 +30,14 @@ permit_params :name, :description, :latitude, :longitude, :image_url,
     column :latitude
     column :longitude
     column :description
-    column :address
+    # column :address
     column :title
     column :location_type
     column :best_month_from
     column :best_month_to
+    column :themes do |location|
+      location.themes.pluck(:name).try(:join, ', ')
+    end
   end
 
 end
