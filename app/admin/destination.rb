@@ -1,5 +1,5 @@
 ActiveAdmin.register Destination do
-  permit_params :name, :description, theme_ids: []
+  permit_params :name, :description, :image_url, theme_ids: []
   form do |f|
     f.inputs # Include the default inputs
     f.inputs "Themes" do # Make a panel that holds inputs for lifestyles
@@ -11,6 +11,7 @@ ActiveAdmin.register Destination do
     attributes_table do
       row :name
       row :description
+      row :image_url
       row :themes do |destination|
         destination.themes.pluck(:name).try(:join, ', ')
       end
