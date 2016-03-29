@@ -5,7 +5,7 @@ ActiveAdmin.register Location do
 #
 permit_params :name, :description, :latitude, :longitude, :image_url,
   :best_month_from, :best_month_to, :address, :phone, :activity_theme_cd, :directions,
-  :url, :hours, :email, :title, :location_type, theme_ids: []
+  :url, :hours, :email, :title, :location_type, :destination_id, theme_ids: []
 #
 # or
 #
@@ -16,6 +16,7 @@ permit_params :name, :description, :latitude, :longitude, :image_url,
 # end
   form do |f|
     f.inputs # Include the default inputs
+    # f.input :destination_id, as: :select, collection: Destination.all.order(:name)
     f.inputs "Themes" do # Make a panel that holds inputs for lifestyles
       f.input :themes, as: :check_boxes, collection: Theme.all # Use formtastic to output my collection of checkboxes
     end
@@ -23,10 +24,11 @@ permit_params :name, :description, :latitude, :longitude, :image_url,
   end
 
   index do
-    column 'id' do |location|
-      link_to location.id, admin_location_path(location)
-    end
+    id_column
     column :name
+    column :destination_id do |location|
+      location.destination.name
+    end
     # column :latitude
     # column :longitude
     column :description
@@ -38,6 +40,7 @@ permit_params :name, :description, :latitude, :longitude, :image_url,
     column :themes do |location|
       location.themes.pluck(:name).try(:join, ', ')
     end
+    actions
   end
 
   show do

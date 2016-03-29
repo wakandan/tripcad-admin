@@ -1,6 +1,7 @@
 class Location < ActiveRecord::Base
   has_and_belongs_to_many :themes
   has_and_belongs_to_many :plans
+  belongs_to :destination
   accepts_nested_attributes_for :themes
   private
     def location_params
