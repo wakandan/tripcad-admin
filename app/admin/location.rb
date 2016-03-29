@@ -5,7 +5,7 @@ ActiveAdmin.register Location do
 #
 permit_params :name, :description, :latitude, :longitude, :image_url,
   :best_month_from, :best_month_to, :address, :phone, :activity_theme_cd, :directions,
-  :url, :hours, :email, :title, :location_type, :destination_id, theme_ids: []
+  :url, :hours, :email, :title, :location_type, :destination_id, :country_id, theme_ids: []
 #
 # or
 #
@@ -27,7 +27,7 @@ permit_params :name, :description, :latitude, :longitude, :image_url,
     id_column
     column :name
     column :destination_id do |location|
-      location.destination.name
+      location.destination.nil? ? '' : location.destination.name
     end
     # column :latitude
     # column :longitude
@@ -35,8 +35,9 @@ permit_params :name, :description, :latitude, :longitude, :image_url,
     # column :address
     column :title
     column :location_type
-    # column :best_month_from
-    # column :best_month_to
+    column :country do |location|
+      location.country.nil? ? '' : location.country.name
+    end
     column :themes do |location|
       location.themes.pluck(:name).try(:join, ', ')
     end
@@ -45,12 +46,11 @@ permit_params :name, :description, :latitude, :longitude, :image_url,
 
   show do
     attributes_table do
-      row :name
-      row :description
       row :themes do |location|
         location.themes.pluck(:name).try(:join, ', ')
       end
     end
+    default_main_content
   end
 
 end
